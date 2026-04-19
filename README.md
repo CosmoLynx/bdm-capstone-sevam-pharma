@@ -97,7 +97,7 @@ bdm-capstone-sevam-pharma/
 |----------|------|
 | 📂 Dataset & Python Code | [Google Drive](https://drive.google.com/drive/folders/1bJx9N-o4fXlg1Ojbqj3zNyEu55Xlmnzo?usp=sharing) |
 | 🎙️ Owner Interview (Proof of Originality) | [Google Drive](https://drive.google.com/drive/folders/1xNe_Zxwu7vwWJsFfQFaIfLIiEs1xsBgm?usp=sharing) |
-| 🌐 Project Blog | [Live on GitHub Pages](https://YOUR-USERNAME.github.io/bdm-capstone-sevam-pharma) |
+| 🌐 Project Blog | [Live on GitHub Pages](https://CosmoLynx.github.io/bdm-capstone-sevam-pharma) |
 
 ---
 
