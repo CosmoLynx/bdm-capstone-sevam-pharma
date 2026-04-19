@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I Turned a Pharma Distributor's Chaos into Data Gold | Abhay Sharma</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1410;
+    --ink-muted: #6b5e52;
+    --ink-faint: #c5b8ad;
+    --cream: #faf7f2;
+    --paper: #fff;
+    --accent: #e85d2f;
+    --accent-light: #fff0eb;
+    --teal: #0f7b6c;
+    --teal-light: #e3f5f2;
+    --gold: #c8830a;
+    --gold-light: #fef8e7;
+    --purple: #5c3d9e;
+    --purple-light: #f0ebff;
+    --border: #e8e0d5;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  /* Hero */
+  .hero {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 80px 24px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.018) 40px,
+      rgba(255,255,255,0.018) 41px
+    );
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 58px);
+    font-weight: 900;
+    line-height: 1.1;
+    max-width: 820px;
+    margin: 0 auto 24px;
+    text-align: center;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: rgba(250,247,242,0.65);
+    max-width: 560px;
+    margin: 0 auto 40px;
+    text-align: center;
+  }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    font-size: 13px;
+    color: rgba(250,247,242,0.5);
+    flex-wrap: wrap;
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* Layout */
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Sections */
+  .section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section:last-child { border-bottom: none; }
+
+  /* Lead */
+  .lead {
+    font-size: 20px;
+    color: var(--ink-muted);
+    line-height: 1.65;
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  p { margin-bottom: 20px; font-size: 16px; }
+  p:last-child { margin-bottom: 0; }
+
+  /* Section headings */
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 3.5vw, 34px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    margin-top: 32px;
+    color: var(--ink);
+  }
+
+  /* Pull quote */
+  .pullquote {
+    border-left: 4px solid var(--accent);
+    padding: 20px 28px;
+    margin: 40px 0;
+    background: var(--accent-light);
+    border-radius: 0 8px 8px 0;
+  }
+  .pullquote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-style: italic;
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Stat strip */
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 40px 0;
+  }
+  .stat-card {
+    background: var(--paper);
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  /* Method cards */
+  .method-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+  @media(max-width:540px) { .method-grid { grid-template-columns: 1fr; } }
+  .method-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+  }
+  .method-card .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .badge-teal { background: var(--teal-light); color: var(--teal); }
+  .badge-gold { background: var(--gold-light); color: var(--gold); }
+  .badge-purple { background: var(--purple-light); color: var(--purple); }
+  .badge-red { background: #fff0f0; color: #c0392b; }
+
+  .method-card h4 {
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .method-card p {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  /* Finding callout */
+  .finding {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 24px 0;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .finding-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .icon-teal { background: var(--teal-light); }
+  .icon-gold { background: var(--gold-light); }
+  .icon-red { background: #fff0f0; }
+  .icon-purple { background: var(--purple-light); }
+  .finding-text strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .finding-text p { font-size: 14px; color: var(--ink-muted); margin: 0; }
+
+  /* Timeline */
+  .timeline { margin: 32px 0; }
+  .timeline-item {
+    display: flex;
+    gap: 20px;
+    padding-bottom: 32px;
+    position: relative;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 40px;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item:last-child::before { display: none; }
+  .timeline-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .timeline-content h4 {
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 4px;
+    padding-top: 8px;
+  }
+  .timeline-content p { font-size: 14px; color: var(--ink-muted); margin: 0; }
+
+  /* Code-style highlight */
+  .highlight-box {
+    background: #1a1410;
+    color: #e8d5b0;
+    border-radius: 10px;
+    padding: 24px 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    margin: 32px 0;
+    line-height: 1.8;
+  }
+  .highlight-box .comment { color: #6b7560; }
+  .highlight-box .key { color: #e85d2f; }
+  .highlight-box .val { color: #7ec8a4; }
+
+  /* CTA */
+  .cta-block {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 16px;
+    padding: 48px 40px;
+    text-align: center;
+    margin: 48px 0;
+  }
+  .cta-block h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--cream);
+    margin-bottom: 12px;
+    margin-top: 0;
+  }
+  .cta-block p {
+    color: rgba(250,247,242,0.6);
+    margin-bottom: 28px;
+    font-size: 15px;
+  }
+  .cta-links {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-ghost { background: rgba(255,255,255,0.1); color: var(--cream); border: 1px solid rgba(255,255,255,0.2); }
+
+  /* Tags */
+  .tag-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .tag {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-weight: 500;
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--ink);
+    color: rgba(250,247,242,0.4);
+    text-align: center;
+    padding: 32px 24px;
+    font-size: 13px;
+  }
+  .footer span { color: var(--accent); }
+
+  /* Fun highlight text */
+  mark {
+    background: linear-gradient(120deg, #ffeaa7 0%, #ffd32a 100%);
+    padding: 1px 4px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+
+  /* Responsive */
+  @media(max-width: 600px) {
+    .hero { padding: 60px 20px 48px; }
+    .cta-block { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container" style="text-align:center; position:relative; z-index:1;">
+    <div class="hero-tag">BDM Capstone — IIT Madras</div>
+    <h1>How I Turned a Pharma Distributor's <em>Inventory Chaos</em> into Data Gold</h1>
+    <p class="hero-sub">One year of messy medicine data. Four problem statements. Twelve analysis techniques. Zero Kaggle datasets.</p>
+    <div class="hero-meta">
+      <span>✍ Abhay Sharma &nbsp;·&nbsp; 23F3001400</span>
+      <span>📍 Sevam Pharma LLP, Sangli</span>
+      <span>🗓 Feb 2025 – Jan 2026</span>
+    </div>
+  </div>
+</header>
+
+<!-- INTRO -->
+<main>
+<div class="container">
+
+  <section class="section">
+    <p class="lead">Picture this: a pharma distribution company in Sangli is losing money to expired medicines sitting on shelves, while some fast-moving drugs keep going out of stock. Their records? A beautiful mess of Excel sheets, inconsistent naming, and stock entries that somehow violate basic math. Now imagine someone handing you this data and saying — "figure it out."</p>
+    <p>That someone was me. And yes, I panicked. But then I opened Python, took a deep breath, and got to work.</p>
+    <p>This is the story of my BDM Capstone Project — how I worked with <strong>Sevam Pharma LLP</strong>, a real B2B pharmaceutical distributor, to bring order to their operational chaos using data analysis. Spoiler: it involved ABC analysis, expiry risk scores, and discovering that a single retailer was responsible for <mark>39% of all revenue</mark>. Wild, right?</p>
+  </section>
+
+  <!-- THE BUSINESS -->
+  <section class="section">
+    <div class="section-label">The Business</div>
+    <h2>Meet Sevam Pharma — The Underdog of Medicine Distribution</h2>
+
+    <p>Sevam Pharma LLP is not some giant multinational. It's a lean, B2B pharmaceutical distributor tucked in Sangli, Maharashtra, supplying medicines — mostly from Sun Pharma — to retail medical stores in the region. Think of them as the invisible backbone between the medicine factory and your local pharmacy.</p>
+
+    <p>Founded in 2022, they had 12 employees, a warehouse full of boxes, and a growing list of problems that come with growth: too much of some medicines, not enough of others, and retailers returning stock left and right.</p>
+
+    <div class="pullquote">
+      <p>"The warehouse was running on gut feel and old habits. My job was to replace that with data — and make the owner actually trust it."</p>
+    </div>
+
+    <p>Getting the data wasn't glamorous. It meant having real conversations with the owner, getting an official authorization letter signed, and sitting through the slightly terrifying experience of explaining what "data analysis" means to someone who's been doing business without it for years. But they said yes — and that was everything.</p>
+
+    <div class="stat-strip">
+      <div class="stat-card">
+        <span class="stat-num">1 yr</span>
+        <span class="stat-label">of real business data</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">36</span>
+        <span class="stat-label">monthly datasets cleaned</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">51</span>
+        <span class="stat-label">medicines analyzed</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">12</span>
+        <span class="stat-label">analysis techniques used</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROBLEM -->
+  <section class="section">
+    <div class="section-label">The Problem</div>
+    <h2>Four Problems That Were Quietly Draining Money</h2>
+
+    <p>Before touching any code, I spent time understanding the business. Four core problem statements emerged:</p>
+
+    <div class="finding">
+      <div class="finding-icon icon-red">💊</div>
+      <div class="finding-text">
+        <strong>Inventory & Expiry Chaos</strong>
+        <p>Slow-moving medicines rotting on shelves = money literally expiring. Fast-moving ones running out = missed sales. Both happening simultaneously — a classic lose-lose.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-icon icon-gold">🏪</div>
+      <div class="finding-text">
+        <strong>Underperforming Retail Outlets</strong>
+        <p>Some retailers were receiving stock but returning a shocking 25–35% of it. Why? Nobody had stopped to find out. Until now.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-icon icon-teal">📈</div>
+      <div class="finding-text">
+        <strong>Seasonal Demand Blindspot</strong>
+        <p>Procurement was based on habit, not data. February demand ≠ October demand. Nobody had mapped this out clearly.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-icon icon-purple">⚠️</div>
+      <div class="finding-text">
+        <strong>Data Anomalies & Inconsistencies</strong>
+        <p>Stock records that violated the formula: <em>Closing = Opening + Purchase − Sales</em>. Missing material codes. Same medicine, different names. The dataset was a puzzle.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE TOOLKIT -->
+  <section class="section">
+    <div class="section-label">The Toolkit</div>
+    <h2>The Arsenal — What I Actually Did With the Data</h2>
+
+    <p>Once the data was cleaned (which took longer than I'd like to admit), I deployed a mix of inventory management techniques and statistical analysis. Here's what I used and why:</p>
+
+    <div class="method-grid">
+      <div class="method-card">
+        <span class="badge badge-teal">Inventory</span>
+        <h4>ABC Analysis</h4>
+        <p>Classified all medicines by revenue contribution. Turned out 9 products = 80% of revenue. Classic Pareto in action.</p>
+      </div>
+      <div class="method-card">
+        <span class="badge badge-teal">Inventory</span>
+        <h4>FSN Analysis</h4>
+        <p>Split medicines into Fast, Slow, Non-moving. 33 fast movers, 11 slow, 7 non-moving. Non-movers = dead capital.</p>
+      </div>
+      <div class="method-card">
+        <span class="badge badge-gold">Risk</span>
+        <h4>Expiry Risk Scoring</h4>
+        <p>Built a custom formula: Months of Stock ÷ Months to Expiry. Score &gt; 1 = danger zone. 21.5% of products were high-risk.</p>
+      </div>
+      <div class="method-card">
+        <span class="badge badge-gold">Risk</span>
+        <h4>Inventory Turnover</h4>
+        <p>Sales ÷ Average Inventory. Low ratio = stock sitting idle. Flagged the worst offenders for immediate action.</p>
+      </div>
+      <div class="method-card">
+        <span class="badge badge-purple">Retail</span>
+        <h4>Retailer Contribution Analysis</h4>
+        <p>Mapped which retailers actually drive revenue vs which ones just return stock. One retailer = 39% of revenue. Mind-blowing.</p>
+      </div>
+      <div class="method-card">
+        <span class="badge badge-purple">Retail</span>
+        <h4>Return Impact Analysis</h4>
+        <p>Quantified how much returned stock was eating into realized sales. The numbers were uncomfortable to present.</p>
+      </div>
+      <div class="method-card">
+        <span class="badge badge-red">Trends</span>
+        <h4>Demand & Trend Analysis</h4>
+        <p>Mapped demand month by month. February = peak. April = valley. October = tricky — high demand, lower margins. A seasonal story emerged.</p>
+      </div>
+      <div class="method-card">
+        <span class="badge badge-red">Anomalies</span>
+        <h4>Correlation + Anomaly Detection</h4>
+        <p>Opening-Closing stock correlation: 0.90. Sales-Closing stock: −0.71. Found records where stock math simply didn't add up.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINDINGS -->
+  <section class="section">
+    <div class="section-label">The Jaw-Dropping Findings</div>
+    <h2>What the Data Actually Revealed</h2>
+
+    <p>Here's where things got genuinely interesting. I expected to find some inventory issues. I didn't expect the data to tell such a clear, almost dramatic story.</p>
+
+    <h3>The 9-Product Empire</h3>
+    <p>Just 9 medicines out of 51 were responsible for <mark>80% of total revenue</mark>. The top product alone — PRAMIPEX ER 0.375 TA — contributed nearly 39% of all revenue by itself. The business was essentially built on a handful of medicines. One supply disruption and the whole thing wobbles.</p>
+
+    <h3>The Retailer Who Runs Everything</h3>
+    <p>A single retailer called <strong>Pooja Palus</strong> was generating 39.2% of all revenue. The next biggest? 14.1%. Most others? A rounding error labeled "Others." But here's the twist — when I looked at sales <em>quantity</em>, the distribution was much more even. It's not that Pooja Palus buys more medicines; it's that they buy <em>more expensive</em> ones. Fascinating.</p>
+
+    <div class="highlight-box">
+      <span class="comment"># The inventory math that kept breaking</span><br>
+      <span class="key">Rule:</span>  <span class="val">Closing = Opening + Purchase – Sales</span><br>
+      <span class="key">Reality:</span> <span class="val">Several records: NOPE. Just... nope.</span><br>
+      <span class="comment"># Products with zero movement? Not in the dataset at all.</span><br>
+      <span class="comment"># They should be. With equal opening & closing stock.</span><br>
+      <span class="key">Verdict:</span> <span class="val">Data reliability issues. Flagged. Reported.</span>
+    </div>
+
+    <h3>Returns Are a Silent Killer</h3>
+    <p>Several retailers were returning 350 to 450 units out of every 1,100–1,400 units supplied. That's <mark>25–35% of stock coming back</mark> unrealized. The business was shipping more than retailers could actually sell — a textbook mismatch between supply push and actual demand pull.</p>
+
+    <h3>High Sales ≠ High Profit (Surprise!)</h3>
+    <p>February had the highest revenue. But March and May had larger profit bubbles. October saw rising demand paired with shrinking margins. The relationship between volume and profitability was more complicated than anyone realized — and now there's data to prove it.</p>
+  </section>
+
+  <!-- THE JOURNEY -->
+  <section class="section">
+    <div class="section-label">The Journey</div>
+    <h2>What This Project Actually Felt Like</h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot">1</div>
+        <div class="timeline-content">
+          <h4>Finding a willing business</h4>
+          <p>The hardest part. Approached Sevam Pharma, explained the project, got the authorization letter signed. Not as easy as it sounds when you're a student with a laptop and an IIT letterhead.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">2</div>
+        <div class="timeline-content">
+          <h4>Data collection: the beautiful mess</h4>
+          <p>Received 36 monthly Excel sheets — sales data, purchase data, stock statements. Each slightly different. Some missing columns. Some with duplicate entries. Adventure mode: activated.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">3</div>
+        <div class="timeline-content">
+          <h4>Cleaning, consolidating, crying a little</h4>
+          <p>Pandas became my best friend. Removed constant-value columns, handled missing material codes, merged 36 files into unified annual datasets. The satisfaction was real.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">4</div>
+        <div class="timeline-content">
+          <h4>Analysis: where it all clicked</h4>
+          <p>Matplotlib, Seaborn, and a lot of coffee. Each chart revealed something new. The correlation heatmap showing −0.71 between sales and closing stock was a legitimate eureka moment.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">5</div>
+        <div class="timeline-content">
+          <h4>Recommendations: making it actionable</h4>
+          <p>The point isn't fancy graphs. It's: what does the owner DO now? Sales-based replenishment, expiry-based prioritization, retailer-specific allocation. Real, implementable changes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECOMMENDATIONS TEASER -->
+  <section class="section">
+    <div class="section-label">Takeaways</div>
+    <h2>What I Told the Business to Do Differently</h2>
+
+    <p>Data without recommendations is just decoration. Here's what I proposed — grounded in the findings:</p>
+
+    <p>Adopt a <strong>sales-based replenishment strategy</strong> — buy 1.2–1.5× the average of the last 2–3 months, not based on gut feel. Set <strong>clear reorder levels</strong> per product so stockouts become an alert, not a surprise. For overstocked items? Discount them, redistribute them, or pause procurement. For the high-return retailers? Set maximum supply limits based on their actual consumption history.</p>
+
+    <p>The big one: move from <strong>uniform distribution</strong> (sending the same stock to every retailer) to <strong>retailer-specific allocation</strong> based on historical sales performance. Not every pharmacy is the same. The data makes that embarrassingly clear.</p>
+
+    <div class="pullquote">
+      <p>"The data wasn't broken. The decisions being made without it — those were broken."</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <h3>Want to See the Full Analysis?</h3>
+    <p>All reports, Python code, datasets (anonymized), and the presentation are available below. Pull it apart, learn from it, build on it.</p>
+    <div class="cta-links">
+      <a class="btn btn-primary" href="https://drive.google.com/drive/folders/1bJx9N-o4fXlg1Ojbqj3zNyEu55Xlmnzo?usp=sharing" target="_blank">
+        📂 Dataset & Code
+      </a>
+      <a class="btn btn-ghost" href="https://drive.google.com/drive/folders/1xNe_Zxwu7vwWJsFfQFaIfLIiEs1xsBgm?usp=sharing" target="_blank">
+        🎙 Owner Interview
+      </a>
+    </div>
+    <p style="margin-top: 20px; font-size: 12px; color: rgba(255,255,255,0.3);">Reports available on request · IIT Madras BS Program · Roll: 23F3001400</p>
+  </div>
+
+  <!-- TAGS -->
+  <div class="tag-row">
+    <span class="tag">IIT Madras</span>
+    <span class="tag">BDM Capstone</span>
+    <span class="tag">Python</span>
+    <span class="tag">Pandas</span>
+    <span class="tag">Pharmaceutical</span>
+    <span class="tag">Inventory Management</span>
+    <span class="tag">ABC Analysis</span>
+    <span class="tag">Data Analytics</span>
+    <span class="tag">Sangli</span>
+    <span class="tag">Sun Pharma</span>
+  </div>
+
+</div>
+</main>
+
+<footer class="footer">
+  <p>Written by <span>Abhay Sharma</span> · BDM Capstone Project · IIT Madras Online BS Program · 2026</p>
+  <p style="margin-top: 8px; font-size: 11px;">All data used with explicit authorization from Sevam Pharma LLP · Confidentiality maintained</p>
+</footer>
+
+</body>
+</html>
